@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  openjdk:
+    image: openjdk:11-slim
+    volumes:
+      - ../build/libs:/usr/src/myapp
+    ports:
+      - "8080:8080"
+    #command: /bin/sh -c "while :; do sleep 10; done"
+    command: java -jar /usr/src/myapp/kotlin-sample-api-0.0.1-SNAPSHOT.jar
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.26
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - TZ=Asia/Tokyo
+      - BIND-ADDRESS=0.0.0.0
+    volumes:
+      - ./mysql-container/init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    tty: true
