@@ -1,11 +1,9 @@
 package com.nishimu0507.kotlinsampleapi.domain.entity
 
-import com.nishimu0507.kotlinsampleapi.domain.value.MemberId
-
 data class AccountEntity(
-    val memberId: MemberId,
+    val memberId: String,
     val email: String,
-    val status: Status,
+    val status: String,
     val createdAt: String,
     val createdBy: String,
     val updatedAt: String,

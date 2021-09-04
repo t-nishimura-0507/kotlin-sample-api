@@ -3,7 +3,7 @@ CREATE TABLE account.account
 (
     `member_id`  varchar(64) COLLATE utf8mb4_bin NOT NULL,
     `email`      varchar(64) COLLATE utf8mb4_bin NOT NULL,
-    `status`     tinyint(4) NOT NULL,
+    `status`     varchar(64) COLLATE utf8mb4_bin NOT NULL,
     `created_at` datetime(6) NOT NULL,
     `created_by` varchar(64) COLLATE utf8mb4_bin NOT NULL,
     `updated_at` datetime(6) DEFAULT NULL,

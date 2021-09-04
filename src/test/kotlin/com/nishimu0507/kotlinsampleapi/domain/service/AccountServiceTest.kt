@@ -15,10 +15,9 @@ class AccountServiceTest {
 
     @Test
     fun アカウント取得が正常にできること() {
-
         val accountEntity = accountService.getByMemberId("D100testtest")
-
         Assertions.assertEquals(accountEntity.email, "example@example.com")
+        Assertions.assertEquals(accountEntity.memberId, "D100testtest")
     }
 
 }

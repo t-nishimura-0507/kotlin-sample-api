@@ -16,8 +16,11 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.apache.tomcat:tomcat-jdbc:9.0.2")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("mysql:mysql-connector-java:8.0.26")
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
