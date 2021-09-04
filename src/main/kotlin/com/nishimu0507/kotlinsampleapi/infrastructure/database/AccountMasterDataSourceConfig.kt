@@ -26,8 +26,6 @@ class AccountMasterDataSourceConfig {
     @Primary
     @Bean(name = ["accountMasterTransactionManager"])
     fun transactionManager(@Qualifier("accountMasterDataSource") dataSource: DataSource): DataSourceTransactionManager {
-        println("test......")
-        println(dataSource)
         val transactionManager = DataSourceTransactionManager()
         transactionManager.dataSource = dataSource
         return transactionManager
