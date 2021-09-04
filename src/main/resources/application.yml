@@ -1,0 +1,12 @@
+datasource:
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://0.0.0.0:3306/account?enabledTLSProtocols=TLSv1.2&nullNamePatternMatchesAll=true
+  username: root
+  password: "password"
+  initialSize: 0
+  maxActive: 10
+  minIdle: 0
+  maxIdle: 10
+  testOnBorrow: true
+  DefaultAutoCommit: false
+  minEvictableIdleTimeMillis: 40000 # failover のことを考慮して短めに
