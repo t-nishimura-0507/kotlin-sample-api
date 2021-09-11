@@ -22,3 +22,53 @@ services:
     ports:
       - "3306:3306"
     tty: true
+
+  dynamodb:
+    image: amazon/dynamodb-local:1.16.0
+    user: root
+    ports:
+      - "8000:8000"
+
+# テーブル作成
+  dynamodb-migrate:
+    image: amazon/aws-cli:2.2.35
+    depends_on:
+      - dynamodb
+    environment:
+      AWS_ACCESS_KEY_ID: 'DUMMYIDEXAMPLE'
+      AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
+    command:
+      "dynamodb create-table
+      --table-name sample_table
+      --attribute-definitions AttributeName=member_id,AttributeType=S AttributeName=status,AttributeType=S
+      --key-schema AttributeName=member_id,KeyType=HASH AttributeName=status,KeyType=RANGE
+      --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+      --endpoint-url http://dynamodb:8000
+      --region ap-northeast-1"
+
+# 以下、簡単なデータ確認、検証用のコマンド例
+# ※こっちはローカルのCLI実行で
+# テーブル一覧確認
+# aws dynamodb list-tables --endpoint-url http://localhost:8000 --region ap-northeast-1
+
+# テーブル確認
+# aws dynamodb describe-table --table-name sample_table --endpoint-url http://localhost:8000 --region ap-northeast-1
+
+# item追加
+# aws dynamodb put-item \
+# --table-name sample_table \
+# --item '{"member_id": {"S": "D100xxxxxxxx"}, "status": {"S": "enabled"}}' \
+# --endpoint-url http://localhost:8000 \
+# --region ap-northeast-1
+
+# item全件取得
+# aws dynamodb scan --table-name sample_table --endpoint-url http://localhost:8000 --region ap-northeast-1
+
+# item取得 (※FIXME:member_idとstatusしか要素がないのに,member_idとstatusをキーに設定している意味のないキー指定。。サンプルだからまぁ..)
+# aws dynamodb get-item --table-name sample_table --key '{ "member_id": {"S": "D100xxxxxxxx" }, "status": {"S": "enabled" } }' --endpoint-url http://localhost:8000 --region ap-northeast-1
+
+# item更新 (※FIXME:更新のつもりが、キー変わっちゃってるから新規追加になってる。)
+# aws dynamodb update-item --table-name sample_table --key '{ "member_id": {"S": "D100xxxxxxx1" }, "status": {"S": "banned" } }' --endpoint-url http://localhost:8000 --region ap-northeast-1
+
+# item削除
+# aws dynamodb delete-item --table-name sample_table --key '{ "member_id": {"S": "D100xxxxxxx1" }, "status": {"S": "banned" } }' --endpoint-url http://localhost:8000 --region ap-northeast-1
